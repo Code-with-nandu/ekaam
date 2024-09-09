@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 switch ($_SERVER['SERVER_NAME']) {
     case 'localhost':
-        $config['base_url'] = 'http://localhost/4_php/ekam_s1/';
+        $config['base_url'] = 'http://localhost/5_ekam/ekam_s1/';
         break;
 
     case '3.86.144.98':
@@ -36,7 +36,7 @@ switch ($_SERVER['SERVER_NAME']) {
         break;
 
     default:
-        $config['base_url'] = 'http://localhost/4_php/ekam_s1/';
+        $config['base_url'] = 'http://localhost/5_ekam/ekam_s1/';
         break;
 }
 
