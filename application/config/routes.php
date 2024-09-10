@@ -52,4 +52,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
+//codeigniter code 
 $route['camp'] = 'Campus/CampusController/index';
+
+
+
+
+
+//Original code 
+    $route['camp/org'] = 'Campus/CampusOrg';
+    $route['camp/org/(:any)'] = 'Campus/CampusOrg/index/$1';
+
