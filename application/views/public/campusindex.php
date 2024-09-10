@@ -1,4 +1,5 @@
-<?php $this->load->view('campus/campusHeader.php'); ?>
+<?php $this->load->view('template/campusHeader.php'); ?>
+<?php $this->load->view('template/nav_page1.php'); ?>
 <br><br>
 <script>
     $(document).ready(function() {
@@ -59,4 +60,4 @@
     </div>
 </div>
 
-<?php $this->load->view('campus/campusFooter.php'); ?>
+<?php $this->load->view('template/campusFooter.php'); ?>
