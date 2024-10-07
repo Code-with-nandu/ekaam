@@ -1,4 +1,4 @@
-<?php $this->load->view('campus/campusHeader.php') ;?>
+<?php $this->load->view('template/campusHeader.php') ;?>
 
     <!-- main Part -->
     <div class="container">
@@ -26,4 +26,6 @@
 
         </div>
     </div>
-    <?php $this->load->view('campus/campusFooter.php') ;?>
+    <?php $this->load->view('template/campusFooter.php') ;?>
+
+   

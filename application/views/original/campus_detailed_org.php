@@ -246,7 +246,7 @@ $this->load->view('public/header');
                     ->order_by("arrival", "asc")
                     ->get("registrations")
                     ->result_array();
-                 
+
                 //echo "<pre>"; print_r($pa);  echo "</pre>";
                 if (!empty($ra)) {
 

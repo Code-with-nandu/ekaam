@@ -1,5 +1,5 @@
 <?php
-// Load header and navigation views
+// Load necessary views for the header and navigation
 $this->load->view('template/campusHeader.php');
 $this->load->view('template/nav_page2.php');
 ?>
@@ -18,14 +18,12 @@ $this->load->view('template/nav_page2.php');
         // Function to check if the request is allowed
         function allowed($value = '')
         {
-            // If test parameter is set, print server request URI and exit
             if (isset($_GET['test'])) {
                 echo "<pre>";
                 print_r($_SERVER['REQUEST_URI']);
                 die();
             }
 
-            // Check if the current URI is not related to Jaipur campus
             if (strpos($_SERVER['REQUEST_URI'], 'public/campus/index/0111') === false) {
                 if (strtolower($_SESSION['publicuser']['country']) != "india" || strtolower($_SESSION['publicuser']['country_last_year']) != "india") {
                     return "<center><br><br><h4 style='color:lightyellow;background-color:darkgrey;'>Currently, only Indian nationals are allowed to register online for other campus.</h4></center>";
@@ -37,7 +35,7 @@ $this->load->view('template/nav_page2.php');
             return "ok";
         }
 
-        // Load the database
+        // Load the default database
         $this->db = $this->load->database("default", true);
 
         // Fetch ashram data based on organization ID and campus ID
@@ -47,35 +45,23 @@ $this->load->view('template/nav_page2.php');
             ->get("m_ashram")
             ->result_array();
 
-        // If no ashram data is found, exit
         if (empty($asha)) {
             die("Campus Data Missing");
         }
 
-        // Get the last element of the ashram data
         $ash = array_pop($asha);
-
-        // Extract ashram details
         $ashram_name = $ash['name'];
         $ashramname = $ash['displayname'];
         $description = $ash['description'] . "  " . $ash['moreinfo'] . "  ";
-        // echo "<pre>"; print_r( $ashram_name);  echo "<pre>"; die();
         ?>
-        <!-- Ribbon Pert created -->
+
+        <!-- Ribbon Part -->
         <style type="text/css">
             .github-ribbon {
                 background-color: #8c8888;
                 top: 8.5em;
                 left: -3.7em;
-                -webkit-transform: rotate(-45deg);
-                -moz-transform: rotate(-45deg);
-                -ms-transform: rotate(-45deg);
-                -o-transform: rotate(-45deg);
                 transform: rotate(-45deg);
-                -webkit-box-shadow: 0 0 0 1px #1d212e inset, 0 0 2px 1px #fff inset, 0 0 1em #888;
-                -moz-box-shadow: 0 0 0 1px #1d212e inset, 0 0 2px 1px #fff inset, 0 0 1em #888;
-                -ms-box-shadow: 0 0 0 1px #1d212e inset, 0 0 2px 1px #fff inset, 0 0 1em #888;
-                -o-box-shadow: 0 0 0 1px #1d212e inset, 0 0 2px 1px #fff inset, 0 0 1em #888;
                 box-shadow: 0 0 0 1px #1d212e inset, 0 0 2px 1px #fff inset, 0 0 1em #888;
                 color: rgba(255, 255, 255, 0.9);
                 display: block;
@@ -84,16 +70,9 @@ $this->load->view('template/nav_page2.php');
                 font: bold .82em sans-serif;
                 text-align: center;
                 text-decoration: none;
-                text-shadow: 1px -1px 8px rgba(0, 0, 0, 0.6);
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                -o-user-select: none;
-                user-select: none;
                 z-index: 111;
             }
 
-            /* Responsive adjustments for mobile */
             @media (max-width: 768px) {
                 .github-ribbon {
                     top: 7.5em;
@@ -101,41 +80,113 @@ $this->load->view('template/nav_page2.php');
                     padding: .4em 2.5em;
                     font-size: 0.7em;
                 }
-
-                .posts img {
-                    max-width: 100%;
-                    height: auto;
-                }
-
-                h1, h3 {
-                    font-size: 1.2em;
-                }
             }
         </style>
 
         <a class="github-ribbon" href="<?= site_url("public/campus/index/" . $ashram_id) ?>" title="<?= $ashramname ?>"><?= $ashramname ?></a>
 
-
         <div class='col-xs-12'>
             <center>
-                <br>
                 <h1>Campus at <?= $ash['displayname'] ?></h1>
-                <br>
                 <img class='tn' src="<?= base_url() . "assets/image/" . $ash['icon_photo'] ?>" alt="<?= $ash['displayname'] ?> Campus">
                 <h3><?= $ash['address'] ?></h3>
                 <hr>
                 <h3><?= $ash['email'] ?></h3>
             </center>
         </div>
-        <!-- responsive design mobile -->
-        <div class='col-xs-12'>
-            &nbsp;
-        </div>
+
+        <!-- Display the top photo if available -->
+        <?php if (trim($ash['top_photo']) != ''): ?>
+            <center>
+                <img class='tn' src="<?= base_url() . "assets/image/" . $ash['top_photo'] ?>" alt="<?= $ash['displayname'] ?> Campus Top Banner">
+            </center>
+        <?php endif; ?>
+
+        <!-- Querying Programs for Public User -->
+        <?php
+        // Load the 'ashrams' database
+        $this->adb = $this->load->database("ashrams", TRUE);
+
+        if (isset($_SESSION['publicuser'])) {
+            // Query to fetch pending registrations
+            $ra = $this->adb
+                ->where("ashram_id", $ashram_id)
+                ->where("visitor_id", $_SESSION['publicuser']["id"])
+                ->where("`arrival` >= '" . date("Ymd") . "'")
+                ->where("status", "donationpending")
+                ->order_by("arrival", "asc")
+                ->get("registrations")
+                ->result_array();
+
+            // Display pending donations if available
+            if (!empty($ra)) {
+
+                foreach ($ra as $k => $r) {
+        ?>
+                    <div class="row crow btn-warning">
+                        <div class="col-xs-12">
+                            <center>
+                                <?php
+                                $pa = $this->adb
+                                    ->where("ashram_id", $ashram_id)
+                                    ->where("id", $r['program_id'])
+                                    ->order_by("program_start", "asc")
+                                    ->get("programs")
+                                    ->result_array();
+                                if (!empty($pa)) {
+                                    $p = array_pop($pa);
+                                    echo "<h4>Donation Pending: {$p['program_name']}</h4>";
+
+                                    // Handling arrival and departure dates
+                                    if (intval($p['arrival']) < 100) {
+                                        $p['arrival'] = date("d/m/Y", strtotime($p['program_start'] . " -1 day "));
+                                    } else {
+                                        $p['arrival'] = ddmmyyyy($p['arrival']);
+                                    }
+
+                                    if (intval($p['departure']) < 100) {
+                                        $p['departure'] = date("d/m/Y", strtotime($p['program_end'] . " +1 day "));
+                                    } else {
+                                        $p['departure'] = ddmmyyyy($p['departure']);
+                                    }
+
+                                    echo "<p>{$p['arrival']} - {$p['departure']}</p>";
+
+                                    // Check if the program is allowed for the user
+                                    if ($_SESSION['natint'] == "national" && $p['nationals_allowed'] == "0") {
+                                        $allowed = "<center><h1 style='color:orange;'> Sorry, Indian Nationals are not allowed for this program at the moment.</h1></center>";
+                                    } else if ($_SESSION['natint'] != "national" && $p['internationals_allowed'] == "0") {
+                                        $allowed = "<center><h1 style='color:orange;'> Sorry, Internationals are not allowed for this program at the moment.</h1></center>";
+                                    } else {
+                                        $allowed = "ok";
+                                    }
+
+                                    if ($allowed == "ok") {
+                                        $pay = "campus/payrazor";
+                                        if ($r['currency'] == "USD") {
+                                            $pay = "payu/payusd";
+                                        }
+                                ?>
+                                        <center>
+                                            <h5><a href="<?= site_url("public/{$pay}/{$r['id']}/") ?>" class="btn btn-md btn-default mt">Go to Donation Page <?= $r['amount'] . " " . $r['currency'] ?>/-</a></h5>
+                                        </center>
+                                <?php
+                                    } else {
+                                        echo $allowed;
+                                    }
+                                }
+                                ?>
+                            </center>
+                        </div>
+                    </div>
+        <?php
+                }
+            }
+        }
+        ?>
 
     </div>
 </div>
-
-
 
 <?php
 // Load footer view

@@ -70,27 +70,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
+
+
+// $active_group = 'default';
+// $active_record = TRUE;
+
+// $db['default']['hostname'] = 'localhost';
+// $db['default']['username'] = 'root';
+// $db['default']['password'] = '';
+// $db['default']['database'] = 'campus';
+// $db['default']['dbdriver'] = 'mysqli';
+// $db['default']['dbprefix'] = '';
+// $db['default']['pconnect'] = TRUE;
+// $db['default']['db_debug'] = TRUE;
+// $db['default']['cache_on'] = FALSE;
+// $db['default']['cachedir'] = '';
+// $db['default']['char_set'] = 'utf8';
+// $db['default']['dbcollat'] = 'utf8_general_ci';
+// $db['default']['swap_pre'] = '';
+// $db['default']['autoinit'] = TRUE;
+// $db['default']['stricton'] = FALSE;
+
+
+// $db['ashrams']['hostname'] = 'localhost';
+// $db['ashrams']['username'] = 'root';
+// $db['ashrams']['password'] = '';
+// $db['ashrams']['database'] = 'ashrams';
+// $db['ashrams']['dbdriver'] = 'mysqli';
+// $db['ashrams']['dbprefix'] = '';
+// $db['ashrams']['pconnect'] = TRUE;
+// $db['ashrams']['db_debug'] = TRUE;
+// $db['ashrams']['cache_on'] = FALSE;
+// $db['ashrams']['cachedir'] = '';
+// $db['ashrams']['char_set'] = 'utf8';
+// $db['ashrams']['dbcollat'] = 'utf8_general_ci';
+// $db['ashrams']['swap_pre'] = '';
+// $db['ashrams']['autoinit'] = TRUE;
+// $db['ashrams']['stricton'] = FALSE;
+
 $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'campus',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'campus',
+    'dbdriver' => 'mysqli',
+    'dbprefix' => '',
+    'pconnect' => TRUE,
+    'db_debug' => TRUE,
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'autoinit' => TRUE,
+    'stricton' => FALSE
+);
+
+$db['ashrams'] = array(
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'ashrams',
+    'dbdriver' => 'mysqli',
+    'dbprefix' => '',
+    'pconnect' => TRUE,
+    'db_debug' => TRUE,
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'autoinit' => TRUE,
+    'stricton' => FALSE
 );

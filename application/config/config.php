@@ -23,22 +23,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-// $config['base_url'] = '';
+// $config['base_url'] = 'http://localhost/5_ekam/ekam_s1';
 // $config['base_url'] = 'http://localhost/1_Gurudev/1_Ashram/New/1_campusNew/camp';
 
-switch ($_SERVER['SERVER_NAME']) {
-    case 'localhost':
-        $config['base_url'] = 'http://localhost/5_ekam/ekam_s1/';
-        break;
+// switch ($_SERVER['SERVER_NAME']) {
+//     case 'localhost':
+//         $config['base_url'] = 'http://localhost/5_ekam/ekam_s1/';
+//         break;
 
-    case '3.86.144.98':
-        $config['base_url'] = 'http://44.202.232.220//ekam_s1/';
-        break;
+//     case '3.86.144.98':
+//         $config['base_url'] = 'http://44.202.232.220//ekam_s1/';
+//         break;
 
-    default:
-        $config['base_url'] = 'http://localhost/5_ekam/ekam_s1/';
-        break;
+//     default:
+//         $config['base_url'] = 'http://localhost/5_ekam/ekam_s1/';
+//         break;
+// }
+if ($_SERVER['HTTP_HOST'] == 'localhost') {
+    $config['base_url'] = 'http://localhost/5_ekam/ekam_s1/';
+} else {
+    $config['base_url'] = 'https://krishnendudalui.in.net/ekam_s1/';
 }
+
 
 /*
 |--------------------------------------------------------------------------

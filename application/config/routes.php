@@ -65,3 +65,5 @@ $route['camp'] = 'Campus/CampusController/index';
     $route['camp/org'] = 'Campus/CampusOrg';
     $route['camp/org/(:any)'] = 'Campus/CampusOrg/index/$1';
 
+//To implement chunked file uploads 
+    $route['upload'] = 'upload/chunk_upload';
