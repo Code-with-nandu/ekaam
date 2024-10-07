@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $config['base_url'] = 'http://localhost/5_ekam/ekam_s1/';
 } else {
-    $config['base_url'] = 'https://krishnendudalui.in.net/ekam_s1/';
+    $config['base_url'] = 'https://krishnendudalui.in.net/ekam-s1/';
 }
 
 
